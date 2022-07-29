@@ -10,6 +10,8 @@
 // 가장 많이 사용되는 3가지 JetPack 라이브러리 LifeCycle, WorkManager, Room 에 사용되고 있다.
 
 // coroutine builder - launch, async, runBlocking
+// runBlocking 은 새로운 코루틴을 실행하고, 완료되기 전까지 현재 스레드를 블로킹합니다.
+// launch 는 Job 객체를 반환하고, async 는 Deferred 통하여 결과값을 반환한다.
 // builder 를 사용하려면 coroutine scope 가 필요하다.
 // suspend fun 을 사용하려면 coroutine scope 안에서 사용해야 한다.
 
