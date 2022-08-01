@@ -11,6 +11,18 @@
 
 // coroutine builder - launch, async, runBlocking
 // runBlocking 은 새로운 코루틴을 실행하고, 완료되기 전까지 현재 스레드를 블로킹합니다.
+
+/* runBlocking 의 위험한 점.
+
+    * 사용하는 runBlocking 의 위치가 UI라면, UI를 Blocking 시키고, Coroutines 가 끝나길 대기한다.
+      따라서 UI에서 사용하는 runBlocking은 사용하지 않아야 한다. UI가 멈추는 현상이 발생한다.
+    * UI에서 오랜 시간 응답이 없다면 ANRs(Application Not Responding)이 발생할 수 있다.
+    * runBlocking은 호출한 위치를 Blocking 시킨다.
+    * runBlocking 내부의 응답이 종료되기 전까지 응답을 주지 않는다.
+    * runBlocking은 비동기가 아닌 동기화로 동작한다.
+    * runBlocking이 필요한 케이스를 찾아야 하는데, 명확한 IO를 보장하고, 데이터의 동기화가 필요한 경우와 UnitTest에서 활용하자.
+
+ */
 // launch 는 Job 객체를 반환하고, async 는 Deferred 통하여 결과값을 반환한다.
 // builder 를 사용하려면 coroutine scope 가 필요하다.
 // suspend fun 을 사용하려면 coroutine scope 안에서 사용해야 한다.
