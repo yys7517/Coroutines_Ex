@@ -1,6 +1,7 @@
 // Closing resources with finally
 
 // 코루틴이 캔슬되었을 때, resource 를 해제 해주자. -> 자원을 돌려주자.
+// finally 구문에서 리소스를 해제해주자는 취지를 보여주는 예제.
 
 import kotlinx.coroutines.*
 

@@ -10,6 +10,7 @@ fun main() = runBlocking {
         } finally {
             withContext(NonCancellable) {
                 // withContext(NonCancellable) -> Job 이 Cancel 되었지만, suspend 함수를 호출시켜야 할 때 사용한다.
+                // withContext 는 context 를 지정한 이후, 코루틴을 실행하는 기능을 한다.
                 println("job: I'm running finally")
                 delay(1000L)
                 println("job: And I've just delayed for 1 sec because I'm non-cancellable")

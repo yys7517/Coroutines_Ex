@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 // launch 의 반환되는 값은 job 객체이다.
 
 fun main() = runBlocking {
+
         val job = GlobalScope.launch {
             delay(3000L)
             println("World!")
@@ -16,5 +17,4 @@ fun main() = runBlocking {
 
         println("Hello")
         job.join()  //  job 이 속한 coroutine 이 종료될 때까지 기다린다.
-        // 뒤로 아무런 구문이 없으므로 현재 runBlocking 이 둘러싸고 있는 coroutine scope 를 종료한다.
-    }
+}

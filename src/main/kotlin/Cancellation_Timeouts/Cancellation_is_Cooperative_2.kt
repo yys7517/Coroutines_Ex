@@ -7,10 +7,12 @@ import kotlinx.coroutines.*
 
 // way 2: explicitly check the cancellation status (isActive) --> 명시적으로 cancel 상태를 체크한다.
 
-// isActive - 현재 코루틴이 cancel 되었는 지 확인한다.
+// isActive - 현재 코루틴이 cancel 되었는 지 확인한다. 명시적으로 cancel 상태를 체크한다.
 
 fun main() = runBlocking {
+
     val startTime = System.currentTimeMillis()
+
     val job = launch(Dispatchers.Default) {
         try {
             var nextPrintTime = startTime
