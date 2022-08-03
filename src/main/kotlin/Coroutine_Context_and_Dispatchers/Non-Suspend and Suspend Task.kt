@@ -1,35 +1,6 @@
-// suspend 는 무엇인가 ? 사전적으로는 '중지하다'라는 뜻의 단어이다.
-// 비동기 실행을 위한 중단 지점을 의미한다.
-
-// suspend fun 을 사용한다면, 하나의 thread 가 blocked 된 상태에서 그 작업을 suspend 하고, 그 기간동안 thread 에서 다른 작업을 수행할 수 있다.
-
+package Composing_Suspending_functions
 
 import kotlinx.coroutines.*
-import kotlin.system.measureTimeMillis
-
-/*
-    suspend fun 은 suspend fun 또는 coroutine 하에 호출이 가능하다.
-
-    fun main() = runBlocking {
-
-        launch {
-            /*
-            delay(3000L)        // coroutine 안에서 호출이 가능하다.
-            println("World!")
-
-            launch 내에 구현부를 메서드로 만들어 호출만하여 구현해보자.
-             */
-            myWorld()
-        }
-
-        println("Hello")
-    }
-
-    suspend fun myWorld() {
-        delay( 3000L )  // delay() 는 suspend fun 이므로, myWolrd() 또한 suspend fun 이 되어야 호출할 수 있다.
-        println("World!")
-    }
- */
 
 fun main() : Unit = runBlocking {
 
@@ -42,7 +13,7 @@ fun main() : Unit = runBlocking {
         async { suspendTask2() }
     }
     // 결과
-    // non - suspend fun
+    // non-suspendTask
     // [nonSuspendTask2] After 1s in (DefaultDispatcher-worker-1)
     // [nonSuspendTask1] After 3s in (DefaultDispatcher-worker-3)
     // [nonSuspendTask2] After 4s in (DefaultDispatcher-worker-1)
@@ -52,7 +23,7 @@ fun main() : Unit = runBlocking {
 
     // Thread.sleep() 동안 thread 가 blocked 되어 다른 작업을 수행할 수 없기 때문에, 각 함수는 서로 다른 스레드에서 실행된다.
 
-    // suspend fun
+    // suspendTask
     // [suspendTask2] After 1s in (DefaultDispatcher-worker-1)
     // [suspendTask1] After 3s in (DefaultDispatcher-worker-1)
     // [suspendTask2] After 4s in (DefaultDispatcher-worker-1)
