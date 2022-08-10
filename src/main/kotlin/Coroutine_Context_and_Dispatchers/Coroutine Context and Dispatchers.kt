@@ -1,6 +1,10 @@
 package Coroutine_Context_and_Dispatchers
 
-// Coroutine Context - Coroutines 는 실행이 될 때, Coroutine Context 에서 실행된다.
+// Coroutine Context - Coroutines 는 실행이 될 때, Coroutine Context 에서 실행된다. "Coroutine이 실행되는 환경"
+
+// 하지만, 우리는 앞서 배운 내용 중, launch 의 Coroutine Context parameter 로 CoroutineExceptionHadler 와 Dispatcher 가 들어가는 것을 볼 수 있다.
+// 이것이 가능한 이유는 각 각 Coroutine Context 를 확장하는 인터페이스 구현체이기 때문이다.
+// Dispatcher 와 CoroutineExceptionHandler 또한 Coroutine 이 실행되는 환경의 일부라고 할 수 있다.
 
 // DisPatcher - Coroutine Context 의 요소 중 하나
 //            - Coroutine 이 어떤 스레드나 스레드 풀에서 실행될 지 결정하는 역할.
@@ -62,4 +66,11 @@ fun main() : Unit = runBlocking {
     // close() 를 통해 메모리 관리를 해주어야 한다.
     newThreadDispatcher.close()
 
+    // newFixedThreadPoolContext(nThreads : Int, name : String) : Thread Pool 을 만드는 메서드
+    //  parameter -> (쓰레드 개수, 쓰레드 풀 이름)
+    val newThreadPool = newFixedThreadPoolContext(2,"ThreadPool with 2 Threads")
+
+    CoroutineScope(newThreadPool).launch {
+
+    }
 }

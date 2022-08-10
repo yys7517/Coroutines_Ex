@@ -6,7 +6,8 @@ import kotlinx.coroutines.*
 // launch 의 반환되는 값은 job 객체이다.
 /*
 fun main() = runBlocking {
-
+    // job은 생성과 동시에 실행된다.
+    // 따라서 job은 필요한 위치에 생성을 해야하고, 그 위치에서 바로 실행을 시켜야하므로 유연성이 떨어진다.
     val job = GlobalScope.launch {
         delay(3000L)
         println("World!")
