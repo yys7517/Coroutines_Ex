@@ -15,7 +15,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlin.system.*
 
-fun flowOnetoThree() : Flow<Int>  = flow {
+private fun getFlow() : Flow<Int>  = flow {
     for( i in 1..3 ) {
         delay(100)
         emit(i)
@@ -24,14 +24,15 @@ fun flowOnetoThree() : Flow<Int>  = flow {
 
 fun main() = runBlocking {
     val time = measureTimeMillis {
-        flowOnetoThree().collect { value ->
+        getFlow().onEach { value -> println("emit $value") }
+            .collect { value ->
             delay(300)
             println(value)
         }
     }
 
     val bufferTime = measureTimeMillis {
-        flowOnetoThree()
+        getFlow().onEach { value -> println("emit $value") }
             .buffer()
             .collect { value ->
                 delay(300)
