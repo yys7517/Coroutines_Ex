@@ -5,6 +5,7 @@ package Channels
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.consumeAsFlow
 
 /*
     producer( Coroutine Builder )
@@ -32,6 +33,8 @@ fun main() = runBlocking {
     val squares = produceSquares()
     squares.consumeEach { println(it) }             // 값을 하나씩 consume..
     println("Done!")
+
+    // squares.consumeAsFlow()
 }
 
 /*
@@ -43,4 +46,14 @@ fun main() = runBlocking {
     }
 
     사용법 : [ ReceiveChannel 객체 ].consumeEach{ }
+
+
+    consumeAsFlow 을 사용하면 데이터를 Flow 형식으로 받는 것도 가능하다.
+    public fun <T> ReceiveChannel<T>.consumeAsFlow(): Flow<T> = ConsumeAsFlow(this)
+
+    하나의 Flow가 배출되므로, Channel에서 한 개의 값이 배출 되는 것과 같다.
+    따라서, Channel 처럼 여러 값을 여러 곳에서 받는 것이 불가능하다.
+    Flow는 Channel에서의 한 개의 값으로 취급. ( ex) Channel<Flow<String>> )
+
+    출처: https://two22.tistory.com/23?category=1134189 [루크의 코드테라피:티스토리]
  */
