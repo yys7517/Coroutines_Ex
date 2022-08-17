@@ -17,21 +17,38 @@ fun main() = runBlocking<Unit> {
         println("The answer is ${concurrentSum()}")
     }
     println("Completed in $time ms")
+
+    val deferredList = fetchTwoVal()
+    println( deferredList[0] )
+    println( deferredList[1] )
 }
 
 
-suspend fun concurrentSum(): Int = coroutineScope {
+suspend fun concurrentSum(): Int =
+    coroutineScope {
+
     val one = async { doSomethingUsefulOne() }
     val two = async { doSomethingUsefulTwo() }
 
     // 임의로 Exception 을 발생시켜보자 => Exception 이 발생하면 coroutineScope { } 내에 있는 코루틴들이 모두 실행되지 않고 취소가 된다.
     delay(10)
-    println("Exception")
-    throw Exception()
+    // println("Exception")
+    // throw Exception()
 
     // 반환 값
     one.await() + two.await()
-}
+
+    }
+
+suspend fun fetchTwoVal() =
+    coroutineScope {
+        val deferreds = listOf(
+            async { doSomethingUsefulOne() },
+            async { doSomethingUsefulTwo() }
+        )
+
+        deferreds.awaitAll()
+    }
 
 
 // Coroutine Scope 와 Global Scope
