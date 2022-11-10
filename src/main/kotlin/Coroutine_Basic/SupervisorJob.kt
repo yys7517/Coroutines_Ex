@@ -7,11 +7,8 @@ import java.lang.AssertionError
 
 // 코루틴 - 비동기 프로그래밍을 위한 일시중단이 가능한 경량 스레드.
 // 코루틴 내부에서 코루틴이 수행될 수 있으며, 이론적으로 그 깊이는 무한해질 수 있다.
-// 하지만, 코루틴 내부에서 수행되는 자식 코루틴에 에러가 발생하게 되면, 그 에러는 Exception Handler를 지정해주지 않더라도
+// 하지만, 코루틴 내부에서 수행되는 자식 코루틴에 에러가 발생하게 되면
 // 계층적으로, 부모 코루틴까지 취소되게 된다. 부모 코루틴이 취소된다면, 그 자식 코루틴 모두가 취소된다.
-
-// 이는 실제작업에서 매우 심각한 버그를 야기한다. 자식 코루틴 하나가 취소되었을 때, 그 부모 코루틴이 계층적으로 취소되고,
-// 그 부모 코루틴의 계층적으로 부모 관계인 모든 코루틴, 즉 모든 코루틴(프로그램)이 취소되어버린다.
 
 // 이와 같은 문제를 방지하기 위해, ""에러의 전파 방향을 자식으로 한정짓는 것이 바로 SupervisorJob"" 이다.
 // SupervisorJob 은 CoroutineContext 의 형태로, 다른 CoroutineContext 들과 혼합해서 사용된다.
@@ -32,8 +29,6 @@ suspend fun main() {
             println("둘 째 Job이 살아있습니다.")
         }
 
-        firstChildJob.join()
-        secondChildJob.join()
     }.join()
 
     // 첫 째 Job이 SupervisorJob() 을 CoroutineContext로 받았기 때문에 부모로 에러가 전파되지 않아, 둘 째 Job까지 실행되는 모습.

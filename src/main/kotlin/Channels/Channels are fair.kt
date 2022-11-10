@@ -7,10 +7,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 // Channel들은 평등하다.
-// 이 전 예제들에서 살펴보았듯이 Channel은 Stack과 같은 FIFO(First-In-First-Out)구조로 작동한다.
+// 이 전 예제들에서 살펴보았듯이 Channel은 Queue와 같이 FIFO(First-In-First-Out)구조로 작동한다.
 // 먼저 값을 요청한 코루틴이 값을 받게 되는 것이다.
 
 data class Ball(var hits : Int)
+
+suspend fun player(name : String, table : Channel<Ball>) {
+    for (ball in table) {   // table 의 ball 을 수신한다.
+        ball.hits++         // ball 의 hits 값 증가.
+        println("$name $ball")
+        delay(100)
+        table.send(ball)    // hits 값이 증가된 ball 을 send.
+    }
+}
 
 fun main() = runBlocking {
     val table = Channel<Ball>()   // 공유 table
@@ -24,6 +33,7 @@ fun main() = runBlocking {
     delay(1000)
     coroutineContext.cancelChildren()
 }
+
 // Result
 // ping Ball(hits=1)
 // pong Ball(hits=2)
@@ -35,13 +45,3 @@ fun main() = runBlocking {
 // pong Ball(hits=8)
 // ping Ball(hits=9)
 // pong Ball(hits=10)
-
-
-suspend fun player(name : String, table : Channel<Ball>) {
-    for (ball in table) {   // table 의 ball 을 수신한다.
-        ball.hits++         // ball 의 hits 값 증가.
-        println("$name $ball")
-        delay(100)
-        table.send(ball)    // hits 값이 증가된 ball 을 send.
-    }
-}

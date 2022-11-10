@@ -4,21 +4,10 @@
 import kotlinx.coroutines.*
 
 fun main() = runBlocking {
-    repeat(100_000) {
-        delay(1000L)
-        print(".")
+    repeat(100_000) { // launch a lot of coroutines
+        launch {
+            delay(5000L)
+            print(".")
+        }
     }
 }
-
-/*
-fun main() = runBlocking {
-    repeat(1000) {i ->
-        println("I'm sleeping $i ... ")
-        delay(500L)
-    }
-
-    delay(1300L)
-}
-
-위 Coroutine 의 반복을 모두 마치기 전에, 프로세스가 종료된다면, Coroutine 또한 종료가 된다.
- */

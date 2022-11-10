@@ -20,7 +20,7 @@ fun main() = runBlocking {
 
     launch {
 
-        // delay(3000L)        // delay - suspend fun 중 하나, suspend fun 과 coroutine 에서 호출할 수 있다.
+        // delay(3000L)        // delay - suspend fun 과 coroutine 에서 호출할 수 있다.
         // println("World!")
 
         // launch 내에 구현부를 메서드로 만들어 호출만하여 구현해보자. myWorld()

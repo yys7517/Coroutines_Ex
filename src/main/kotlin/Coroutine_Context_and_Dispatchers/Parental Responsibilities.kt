@@ -11,12 +11,14 @@ import kotlinx.coroutines.*
 fun main() = runBlocking<Unit> {
 
     val request = launch {
-        repeat(3) { i -> // 약간의 자식 jobs launch
+
+        repeat(3) { i -> // 3개의 자식 launch
             launch {
                 delay((i + 1) * 200L) // 가변적인 지연 200ms, 400ms, 600ms
                 println("Coroutine $i is done [${Thread.currentThread().name}]")
             }
         }
+
         println("request: I'm done and I don't explicitly join my children that are still active [${Thread.currentThread().name}]")
     }
 
@@ -25,10 +27,10 @@ fun main() = runBlocking<Unit> {
     // Coroutine 1 is done [main]
     // Coroutine 2 is done [main]
 
-    // 위 결과처럼 부모 코루틴은 자식 코루틴의 실행이 모두 완료되기를 기다린다.
+    // 위 결과처럼 부모 코루틴 request 는 3개의 자식 코루틴의 실행이 모두 완료되기를 기다린다.
 
-    request.join() // request 코루틴이 완료되기를 기다린다.
-    // request 코루틴이 완료되기를 기다리는 것은 request 자식 코루틴의 실행까지 모두 완료되기를 기다리는 것.
+    request.join() // main 스레드가 일시중단. request 의 실행이 완료되기를 기다린다.
+
     println("Now processing of the request is complete [${Thread.currentThread().name}]")
     // Now processing of the request is complete [main]
 }

@@ -2,6 +2,7 @@ package Coroutine_Basic
 
 import kotlinx.coroutines.*
 
+// main 스레드는 일시중단될 수 있으므로, suspend 키워드를 붙여줘야한다.
 suspend fun main() {
     // job은 필요한 위치에 생성을 해야하고, 그 위치에서 바로 실행을 시켜야하므로 유연성이 떨어진다.
     // job을 Lazy 하게 생성해놓으면, 수행되지 않고 대기상태로 있는다. => job을 Lazy하게 실행한다.

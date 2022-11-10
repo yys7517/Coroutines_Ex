@@ -31,12 +31,14 @@ suspend fun main() {
     // isCancelled -> Job "cancel이 요청" 되었는지
     // isCompleted -> Job 의 "실행이 완료되었거나 cancel이 완료" 되었는지
 
-    /*
+    job.cancel()
+
     job.invokeOnCompletion { throwable ->
         println( throwable )
     }
     // 취소되지 않고 실행을 완료했을 때에는 throwable 값이 null 이 된다.
-    */
+
+    delay(100)
 
     // 따라서 다음과 같이 Handling 해주는 것이 좋다.
     job.invokeOnCompletion { throwable ->
@@ -45,6 +47,4 @@ suspend fun main() {
             null -> println("Job is Completed with no error")
         }
     }
-
-    delay(3000)
 }

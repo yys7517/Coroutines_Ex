@@ -1,7 +1,6 @@
 package Channels
 
 // Coroutine의 Pipeline을 사용하여 소수를 생성하는 예제.
-
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 

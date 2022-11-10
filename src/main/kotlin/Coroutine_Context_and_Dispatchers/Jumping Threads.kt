@@ -38,9 +38,5 @@ suspend fun main() {
                 log("Back to ctx1")
             }
         }
-
-        ctx2Thread.close()
     }
-    ctx1Thread.close()
-
 }

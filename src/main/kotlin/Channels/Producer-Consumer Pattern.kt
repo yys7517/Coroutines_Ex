@@ -3,9 +3,11 @@ package Channels
 // produce 코루틴 빌더와 consumeEach 함수를 사용하여 이 패턴을 정확히 구현할 수 있다.
 // 두 함수를 사용하면 Channel 객체를 명시적으로 만들지 않아도 된다.
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.*
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.runBlocking
 
 /*
     producer( Coroutine Builder )

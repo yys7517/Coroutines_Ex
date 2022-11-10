@@ -5,14 +5,14 @@ fun main() = runBlocking {
     launch {
         repeat(5) { i ->
             println("Coroutine A, $i")
-            // delay(10L)  // 현재 coroutine이 일시 중단될 수 있다.
+            // delay(10L)
         }
     }
 
     launch {
         repeat(5) { i ->
             println("Coroutine B, $i")
-            // delay(10L)  // 현재 coroutine이 일시 중단될 수 있다.
+            // delay(10L)
         }
     }
 
@@ -30,11 +30,10 @@ fun main() = runBlocking {
     // Coroutine B, 3 [main @coroutine#3]
     // Coroutine B, 4 [main @coroutine#3]
 
-
     // launch 는 바로 coroutine 을 시행하는 것이 아니고, 스케줄링을 먼저 한다.
     // 따라서 Outer 가 먼저 출력이 되고, Coroutine A와 B가 시행이 되는것이다.
 
-    // A 와 B 에 delay 를 준다면, 중단지점이 된다.
+    // A와 B에 delay 를 준다면, 중단지점이 된다.
     // delay - 일시 중단 함수
 
     // 코드 내 delay 추가 결과

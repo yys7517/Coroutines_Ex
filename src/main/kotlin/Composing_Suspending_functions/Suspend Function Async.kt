@@ -24,21 +24,20 @@ fun main() = runBlocking<Unit> {
 }
 
 
-suspend fun concurrentSum(): Int =
-    coroutineScope {
+suspend fun concurrentSum(): Int = coroutineScope {
 
     val one = async { doSomethingUsefulOne() }
     val two = async { doSomethingUsefulTwo() }
 
-    // 임의로 Exception 을 발생시켜보자 => Exception 이 발생하면 coroutineScope { } 내에 있는 코루틴들이 모두 실행되지 않고 취소가 된다.
+    // 임의로 Exception 을 발생시켜보자 => Exception 이 발생하면
+    // coroutineScope { }내에 있는 코루틴들이 모두 실행되지 않고 취소가 된다.
     delay(10)
-    // println("Exception")
-    // throw Exception()
+    //println("Exception")
+    //throw Exception()
 
     // 반환 값
     one.await() + two.await()
-
-    }
+}
 
 suspend fun fetchTwoVal() =
     coroutineScope {
@@ -47,9 +46,12 @@ suspend fun fetchTwoVal() =
             async { doSomethingUsefulTwo() }
         )
 
-        deferreds.awaitAll()
-    }
+        deferreds.awaitAll()    // List
+        //public suspend fun <T> awaitAll(vararg deferreds: kotlinx.coroutines.Deferred<T>)
+        //                                                          : kotlin.collections.List<T> { /* compiled code */ }
 
+        // Deferred 값들을 vararg 형태의 인자로 받아서 리스트에 담아 반환.
+    }
 
 // Coroutine Scope 와 Global Scope
 // GlobalScope -> 앱이 처음 시작부터 종료 할때까지 하나의 CoroutineContext 안에서 동작하도록 할 수 있다.

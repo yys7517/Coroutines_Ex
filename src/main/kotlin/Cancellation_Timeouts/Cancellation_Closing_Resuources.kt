@@ -15,7 +15,7 @@ fun main() = runBlocking {
                 // 위와 같이 delay() 와 같은 suspend fun 으로 cancel 할 때, 리소스 해제 지역은 finally 블럭이 된다.
             }
         } finally {
-            // 리소스 해제 지역
+            // 리소스 해제 지역 - 리소스를 해제해주는 것이 좋다.
             println("job: I'm running finally")
         }
     }

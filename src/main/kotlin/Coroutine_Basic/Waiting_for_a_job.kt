@@ -33,11 +33,11 @@ fun main() = runBlocking<Unit> {
         kotlin.io.println("작업1 수행")
 
         kotlin.io.println("작업1 일시중단")
-        kotlin.io.println("작업3 결과 대기중")
         val job3Result = job3.await()       // 작업3의 결과가 필요하여 작업1을 수행하는 코루틴이 일시중단 되었다.
 
         kotlin.io.println("작업1 재개")
-        job3Result.forEach { println(it) }
+        job3Result.forEach { print("$it ") }
+        println()
         kotlin.io.println("작업1 수행완료")
     }
 

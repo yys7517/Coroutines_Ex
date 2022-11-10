@@ -5,9 +5,10 @@ import kotlinx.coroutines.*
 
 fun main() = runBlocking<Unit> {
     try {
-        failedConcurrentSum()
+        println( failedConcurrentSum() )
     } catch(e: ArithmeticException) {
-        println("Computation failed with ArithmeticException")  // => main 에서 또한 Exception 이 발생했다는 사실을 전달받아
+        println("Computation failed with ArithmeticException")
+        // => main 에서 또한 Exception 이 발생했다는 사실을 전달받아
         // catch 에 의한 에러 핸들링이 실행되고, 종료되며 finally 블럭이 실행.
     }
 }
@@ -17,7 +18,7 @@ fun main() = runBlocking<Unit> {
 suspend fun failedConcurrentSum(): Int = coroutineScope {
     val one = async<Int> {
         try {
-            delay(Long.MAX_VALUE) // Emulates very long computation
+            delay(1000) // Emulates very long computation
             42
         } finally {
             println("First child was cancelled")    // ==> Exception 이 전파가 되어서, one(async) 코루틴 또한 실행이 취소되고
@@ -25,8 +26,9 @@ suspend fun failedConcurrentSum(): Int = coroutineScope {
         }
     }
     val two = async<Int> {
-        println("Second child throws an exception")
-        throw ArithmeticException() // ==> 임의로 ArithmeticException() 을 발생시켜보자.
+        // println("Second child throws an exception")
+        // throw ArithmeticException() // ==> 임의로 ArithmeticException() 을 발생시켜보자.
+        42
     }
     one.await() + two.await()
 }

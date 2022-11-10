@@ -5,29 +5,30 @@ package Coroutine_Context_and_Dispatchers
 // Coroutine Context 로 여러 개의 요소들을 정의하고 싶을 때는
 // public operator fun plus(context: CoroutineContext): CoroutineContext
 // CoroutineContext 상의 operator fun plus 를 사용하여
-// 요소들이 더해져서 하나의 Coroutine Context가 된다.
+// 요소들이 더해져서 하나의 CoroutineContext 가 된다.
 
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-fun main() = runBlocking<Unit> {
+fun main() = runBlocking {
     // public operator fun plus(context: CoroutineContext)
     launch(Dispatchers.Default + CoroutineName("test")) {
         println("I'm working in thread ${Thread.currentThread().name}")
+        println("$coroutineContext")
     }
 
-    val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->  }
+    // public interface CoroutineExceptionHandler : kotlin.coroutines.CoroutineContext.Element
+    val exceptionHandler = CoroutineExceptionHandler { _,_, ->  }
     val coroutineContext = Dispatchers.IO + exceptionHandler
 
     CoroutineScope( coroutineContext ).launch {
-
+        println("I'm working in thread ${Thread.currentThread().name}")
     }
 
-    // Dispatcher 의 Key 값을 "KeyA" 라고 하고, CoroutineExceptionHandler 의 Key 값을 "KeyB"라고 하자.
-
     // CoroutineExceptionHandler 을 부모인 coroutineContext 로부터 가져오고 싶다. 어떻게 해야할까 ?
+    // key 값을 사용하여 가져올 수 있다.
     val exceptionHandlerFromContext = coroutineContext[exceptionHandler.key]
-    if( exceptionHandler == exceptionHandlerFromContext )   // 같은 지 확인해볼까 ?
+    if( exceptionHandler == exceptionHandlerFromContext )
         println(true)   // 결과 : true == 같은 context 임을 알 수 있다.
 
     // 자식 CoroutineContext 에 접근이 가능하면 당연 제거도 가능하다. 어떻게 해아할까?
@@ -37,6 +38,6 @@ fun main() = runBlocking<Unit> {
 
     // 부모인 coroutineContext 에서 CoroutineExceptionHandler 를 제거한 context.
     val minusContext = coroutineContext.minusKey(exceptionHandler.key)
-    if( minusContext == Dispatchers.IO )
+    if( minusContext == Dispatchers.IO )    // val coroutineContext = Dispatchers.IO + exceptionHandler
         println(true)   // 결과 : true
 }

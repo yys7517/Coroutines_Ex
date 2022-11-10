@@ -1,7 +1,7 @@
 package Channels
 
 // Fan-Out : 분산 처리
-// Channel 에서 생성되는 값을 여러 개의 코루틴이 나누어 처리할 수 있다.
+// 하나의 Channel 에서 생성되는 값을 여러 개의 코루틴이 나누어 처리할 수 있다.
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
@@ -18,12 +18,14 @@ private fun CoroutineScope.launchProcessor(id: Int, channel: ReceiveChannel<Int>
     for (msg in channel) {
         println("Processor #$id received $msg")
     }
+
+    // channel.consumeEach {  }
+    // public suspend inline fun <E> kotlinx.coroutines.channels.ReceiveChannel<E>.consumeEach
     /*
     하나의 channel 에서 생산하는 값을 여러 개의 코루틴에서 받을 때에는 for 문을 사용하는 것이 안전하다.
 
     Why ? => consumeEach 함수는 suspend 함수이므로, 다른 코루틴을 중단시킬 수 있다.
              for 문을 사용하면 하나의 코루틴이 중단되더라도 다른 코루틴은 계속 작동할 수 있기 때문이다.
-
      */
 }
 

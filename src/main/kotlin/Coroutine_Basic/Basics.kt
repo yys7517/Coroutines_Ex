@@ -16,11 +16,17 @@
 
     * 사용하는 runBlocking 의 위치가 UI라면, UI를 Blocking 시키고, Coroutines 가 끝나길 대기한다.
       따라서 UI에서 사용하는 runBlocking은 사용하지 않아야 한다. UI가 멈추는 현상이 발생한다.
+
     * UI에서 오랜 시간 응답이 없다면 ANRs(Application Not Responding)이 발생할 수 있다.
+
     * runBlocking은 호출한 위치를 Blocking 시킨다.
+
     * runBlocking 내부의 응답이 종료되기 전까지 응답을 주지 않는다.
+
     * runBlocking은 비동기가 아닌 동기화로 동작한다.
-    * runBlocking이 필요한 케이스를 찾아야 하는데, 명확한 IO를 보장하고, 데이터의 동기화가 필요한 경우와 UnitTest에서 활용하자.
+
+    * runBlocking이 필요한 케이스를 찾아야 하는데,
+    명확한 IO를 보장하고, 데이터의 동기화가 필요한 경우와 UnitTest에서 활용하자.
 
  */
 // launch 는 Job 객체를 반환하고, async 는 Deferred 통하여 결과값을 반환한다.
@@ -42,8 +48,6 @@ import kotlinx.coroutines.*
             delay(2000L)
         }
     }
-
-   위 코드는 어차피 main 스레드에서는 작업이 없으므로, main 함수 안 코드를 모두 runBlocking { }으로 묶을 수 있다.
  */
 
 fun main() {

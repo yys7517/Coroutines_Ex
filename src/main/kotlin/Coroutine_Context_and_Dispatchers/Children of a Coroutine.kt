@@ -19,15 +19,16 @@ fun main() = runBlocking<Unit> {
         }
 
 
-        launch {// launch 에 옵션값이 없으므로 상위 context(부모 request의 launch context)를 상속받는다. [main]
+        launch { // launch Context 값이 없으므로 상위 context(부모 request 의 context)를 상속받는다. [main]
             delay(100)
             println("job2: I am a child of the request coroutine [${Thread.currentThread().name}]")
             delay(1000)
             println("job2: I will not execute this line if my parent request is cancelled [${Thread.currentThread().name}]")
         }
     }
+
     delay(500)
     request.cancel() // request 취소 처리.
     delay(1000) // 어떤 일이 발생하는지 보려고 딜레이
-    println("main: Who has survived request cancellation? [${Thread.currentThread().name}]")
+    // println("main: Who has survived request cancellation? [${Thread.currentThread().name}]")
 }
