@@ -35,41 +35,26 @@
 
 import kotlinx.coroutines.*
 
-/*
-    fun main() {
-        GlobalScope.launch {
-            delay(1000L)        -> Thread 를 blocking 하지 않고, 코루틴을 중단시키는 특별한 suspend fun
-            println("World!")
-        }
-
-        println("Hello")
-        // Thread.sleep(2000)   -> Thread 를 blocking 하는 함수.
-        runBlocking {
-            delay(2000L)
-        }
-    }
- */
-
-fun main() {
-    runBlocking {
-        GlobalScope.launch {    // GlobalScope - 코루틴의 생명주기가 전체 애플리케이션 생명주기와 같음.
-            delay(1000L)
-            println("World!")
-        }
-
-        println("Hello")
-        delay(500L)     // delay 길이가 1000ms 보다 적으면, World 가 출력되지않고 끝남.
-                                    // 이러한 부분에서 GlobalScope 가 DaemonThread 와 유사하다.
-    }
-}
-
-/*  표현식 형태
-fun main() = runBlocking {
-    launch {
+/*fun main() = runBlocking {
+    GlobalScope.launch {
         delay(1000L)
         println("World!")
     }
-    println("Hello")
-}
 
- */
+    println("Hello")
+    delay(2000L)
+}*/
+
+fun main() = runBlocking {
+
+    GlobalScope.launch {    // GlobalScope - 코루틴의 생명주기가 전체 애플리케이션 생명주기와 같음.
+        delay(1000L)
+        println("World!")
+    }
+
+    println("Hello")
+    delay(500L)
+    // hello
+    // 이러한 부분에서 GlobalScope 가 DaemonThread 와 유사하다.
+
+}
